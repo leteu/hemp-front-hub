@@ -68,8 +68,18 @@ export default {
       ],
       data: [],
       original: [
-        { id: 1, cctv_model: 'LvmEk-No103', place: '1세부 헴프 집하장 출입문', installation_date: '2021.02.13.', purchase_date: '2021.01.28.'},
-        { id: 2, cctv_model: 'LvmEk-No103', place: '2세부 헴프 집하장 출입문', installation_date: '2021.02.13.', purchase_date: '2021.01.28.'},
+        { id: 1, 
+          cctv_model: 'LvmEk-No103', 
+          place: '1세부 헴프 집하장 출입문', 
+          installation_date: '2021.02.13.',
+          purchase_date: '2021.01.28.'
+        },
+        { id: 2, 
+          cctv_model: 'LvmEk-No103', 
+          place: '2세부 헴프 집하장 출입문', 
+          installation_date: '2021.02.13.', 
+          purchase_date: '2021.01.28.'
+        },
       ]
     }
   },

@@ -71,8 +71,22 @@ export default {
       ],
       data: [],
       original: [
-        { id: 1, name: '공지사항', no: '1', title: '게시판 오픈안내', writer: 'User', createdAt: '2021.01.11', remark: '우경정보기술 게시판 안내', files: '각 세부별 안전관리 지침.pdf' },
-        { id: 2, name: 'FAQ', no: '2', title: '각 세부별 지침안내', writer: 'User', createdAt: '2021.01.11', remark: '우경정보기술 게시판 안내', files: '각 세부별 안전관리 지침.pdf' },
+        { 
+          id: 1, name: '공지사항',
+          no: '1', title: '게시판 오픈안내',
+          writer: 'User', 
+          createdAt: '2021.01.11',
+          remark: '우경정보기술 게시판 안내', 
+          files: '각 세부별 안전관리 지침.pdf' 
+        },
+        { 
+          id: 2, name: 'FAQ', 
+          no: '2', title: '각 세부별 지침안내', 
+          writer: 'User', 
+          createdAt: '2021.01.11', 
+          remark: '우경정보기술 게시판 안내', 
+          files: '각 세부별 안전관리 지침.pdf' 
+        },
       ]
     }
   },

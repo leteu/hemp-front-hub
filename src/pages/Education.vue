@@ -74,8 +74,24 @@ export default {
       ],
       data: [],
       original: [
-        { id: 1, name: '소방안전교육', no: '1', date: '2021.04.01.', place: '(주)우경정보기술', personnel: '안전관리담당자그룹', content: '소방재난 시 대처방법', files: ['훈련관리1.png', '훈련관리2.png', '훈련관리3.png']},
-        { id: 2, name: '헴프 취급 교육', no: '2', date: '2021.03.01.', place: '(주)우경정보기술', personnel: '안전관리담당자그룹', content: '헴프관련 법률 이해', files: ['훈련관리4.png', '훈련관리5.png', '훈련관리6.png']}
+        { id: 1, 
+          name: '소방안전교육', 
+          no: '1', 
+          date: '2021.04.01.', 
+          place: '(주)우경정보기술', 
+          personnel: '안전관리담당자그룹', 
+          content: '소방재난 시 대처방법', 
+          files: ['훈련관리1.png', '훈련관리2.png', '훈련관리3.png']
+        },
+        { id: 2, 
+          name: '헴프 취급 교육', 
+          no: '2', 
+          date: '2021.03.01.', 
+          place: '(주)우경정보기술', 
+          personnel: '안전관리담당자그룹', 
+          content: '헴프관련 법률 이해', 
+          files: ['훈련관리4.png', '훈련관리5.png', '훈련관리6.png']
+        }
       ]
     }
   },

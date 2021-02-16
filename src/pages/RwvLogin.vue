@@ -65,8 +65,8 @@ export default {
   data() {
     return {
       form: {
-        userId: '',
-        password: ''
+        userId: 'eve.holt@reqres.in',
+        password: 'cityslicka'
       },
       submit: false,
       error: false
