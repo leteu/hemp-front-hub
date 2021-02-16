@@ -5,7 +5,6 @@
       src="~assets/quasar-logo-full.svg"
     >
   </q-page>
-  너무 어렵다
 </template>
 
 <script>
