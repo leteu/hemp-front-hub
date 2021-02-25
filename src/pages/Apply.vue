@@ -1,12 +1,11 @@
 <template>
   <q-table
-    title="게시판관리"
+    title="신청, 보고 관리"
     title-class="text-bold text-h5"
     :table-header-style="{ backgroundColor: '#f5f8fa' }"
     :data="data"
     :columns="columns"
     row-key="id"
-    @row-click="prompt"
     :pagination.sync="pagination"
     :loading="loading"
     :filter="filter"
@@ -17,37 +16,56 @@
     flat
   >
     <template v-slot:top-right>
-      <q-input dense debounce="300" v-model="filter" placeholder="Search">
+      <q-btn
+        push
+        class="q-mr-md"
+        padding="sm"
+        color="primary"
+        label = "신청"
+        @Click = "onclick(1)"
+      />
+      <q-btn
+        push
+        class="q-mr-md"
+        padding="sm"
+        color="primary"
+        label = "보고"
+        @Click = "onclick(2)"
+        style="margin-right:100px;"
+      />
+      <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
         <template v-slot:append>
           <q-icon name="search" />
         </template>
       </q-input>
-      <q-btn
-        class="q-ml-md"
-        padding="xs"
-        color="primary"
-        icon="add"
-        to="/createNotice"
-      />
     </template>
 
-    <template v-slot:no-data="{ icon, message, filter }">
-      <div class="full-width row flex-center q-gutter-sm">
-        <span>{{ message }}</span>
-      </div>
+    <template v-slot:body-cell-no="props">
+      <q-td class="text-center" style="width:10%;">
+        {{ props.row.no }}
+      </q-td>
+    </template>
+    <template v-slot:body-cell-user="props">
+      <q-td class="text-center" style="width:10%;">
+        {{ props.row.user }}
+      </q-td>
+    </template>
+    <template v-slot:body-cell-date="props">
+      <q-td class="text-center" style="width:20%;">
+        {{ props.row.date }}
+      </q-td>
     </template>
   </q-table>
 </template>
 
 <script>
-import detailModalNotice from "layouts/DetailModalNotice";
-
 export default {
-  name: "Notice",
+  name: "Apply",
   data () {
     return {
       filter: '',
       loading: false,
+      field: row => row.id,
       pagination: {
         sortBy: 'desc',
         descending: false,
@@ -66,28 +84,44 @@ export default {
           format: val => `${val}`,
         },
         { id: 2, name: 'title', align: 'center', label: '제목', field: 'title' },
-        { id: 3, name: 'writer', align: 'center', label: '작성자', field: 'writer' },
-        { id: 4, name: 'createdAt', align: 'center', label: '작성일자', field: 'createdAt' },
+        { id: 3, name: 'user', align: 'center', label: '작성자', field: 'user' },
+        { id: 4, name: 'date', align: 'center', label: '작성일', field: 'date' },
       ],
       data: [],
       original: [
-        { 
-          id: 1, name: '공지사항',
-          no: '1', title: '게시판 오픈안내',
-          writer: 'User', 
-          createdAt: '2021.01.11',
-          remark: '우경정보기술 게시판 안내', 
-          files: '각 세부별 안전관리 지침.pdf' 
+        {
+          id:1,
+          title:"대마폐기 신청서1",
+          no:'1',
+          user:'신규현',
+          date:'2021.02.18 10:37:48',
+          type:'신청'
         },
-        { 
-          id: 2, name: 'FAQ', 
-          no: '2', title: '각 세부별 지침안내', 
-          writer: 'User', 
-          createdAt: '2021.01.11', 
-          remark: '우경정보기술 게시판 안내', 
-          files: '각 세부별 안전관리 지침.pdf' 
+        {
+          id:2,
+          title:"대마폐기 보고서1",
+          no:'2',
+          user:'신규현',
+          date:'2021.02.18 14:37:48',
+          type:'보고'
         },
-      ]
+        {
+          id:3,
+          title:"대마폐기 신청서2",
+          no:'3',
+          user:'신규현',
+          date:'2021.01.18 10:37:48',
+          type:'신청'
+        },
+        {
+          id:4,
+          title:"대마폐기 보고서2",
+          no:'4',
+          user:'신규현',
+          date:'2021.01.18 14:37:48',
+          type:'보고'
+        },
+      ],
     }
   },
   mounted () {
@@ -129,7 +163,7 @@ export default {
 
         // ...and turn of loading indicator
         this.loading = false
-      }, 500)
+      }, 1500)
     },
 
     // emulate ajax call
@@ -143,12 +177,12 @@ export default {
       if (sortBy) {
         const sortFn = sortBy === 'desc'
           ? (descending
-              ? (a, b) => (a.name > b.name ? -1 : a.name < b.name ? 1 : 0)
-              : (a, b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0)
+            ? (a, b) => (a.name > b.name ? -1 : a.name < b.name ? 1 : 0)
+            : (a, b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0)
           )
           : (descending
-              ? (a, b) => (parseFloat(b[sortBy]) - parseFloat(a[sortBy]))
-              : (a, b) => (parseFloat(a[sortBy]) - parseFloat(b[sortBy]))
+            ? (a, b) => (parseFloat(b[sortBy]) - parseFloat(a[sortBy]))
+            : (a, b) => (parseFloat(a[sortBy]) - parseFloat(b[sortBy]))
           )
         data.sort(sortFn)
       }
@@ -168,47 +202,11 @@ export default {
         }
       })
       return count
-    },
-
-    prompt(evt, row) {
-      this.$q.dialog({
-        component: detailModalNotice,
-
-        // optional if you want to have access to
-        // Router, Vuex store, and so on, in your
-        // custom component:
-
-        parent: this, // becomes child of this Vue node
-                      // ("this" points to your Vue component)
-                      // (prop was called "root" in < 1.1.0 and
-                      // still works, but recommending to switch
-                      // to the more appropriate "parent" name)
-
-        // props forwarded to component
-        // (everything except "component" and "parent" props above):
-        no: row.no,
-        name: row.name,
-        title: row.title,
-        writer: row.writer,
-        createdAt: row.createdAt,
-        remark: row.remark,
-        files: row.files,
-        // ...more.props...
-      }).onOk((data) => {
-        this.$router.push({
-          name: 'updateNotice',
-          params: {
-            id: data.no,
-            name: data.name,
-            title: data.title,
-            writer: data.writer,
-            createdAt: data.createdAt,
-            remark: data.remark,
-            files: data.files,
-          }
-        })
-      })
-    },
+    }
   }
 }
 </script>
+
+<style>
+
+</style>

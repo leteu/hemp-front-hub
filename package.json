@@ -9,20 +9,22 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.0.0",
+    "@quasar/extras": "^1.9.17",
     "axios": "^0.21.1",
-    "core-js": "^3.6.5",
+    "chart.js": "^2.9.4",
+    "core-js": "^3.9.0",
     "layouts": "^3.0.2",
     "pages": "0.0.16",
-    "quasar": "^1.0.0",
+    "quasar": "^1.15.4",
     "vue": "^2.6.12",
     "vue-axios": "^3.2.4",
+    "vue-chartjs": "^3.5.1",
     "vue-daum-postcode": "^0.9.0",
     "vuelidate": "^0.7.6",
-    "vuex": "^3.6.0"
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
-    "@quasar/app": "^2.0.0",
+    "@quasar/app": "^2.1.15",
     "vue-router": "^3.5.1"
   },
   "browserslist": [

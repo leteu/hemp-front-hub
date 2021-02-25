@@ -140,10 +140,10 @@ const linksData = [  {
         link: '/cctv',
       },
       {
-        title: 'RFID',
+        title: 'ID [RFID/QR]',
         caption: '',
         icon: '',
-        link: '/rfid',
+        link: '/assetId',
       },
       {
         title: '시건 장치',
@@ -157,6 +157,12 @@ const linksData = [  {
         icon: '',
         link: '/scanner',
       },
+      {
+        title: '공동 소모품',
+        caption: '',
+        icon: '',
+        link: '/consumables',
+      },
     ],
   },
   {
@@ -165,17 +171,23 @@ const linksData = [  {
     icon: '',
     expansion: [
       {
-        title: 'RFID 이력',
+        title: 'ID 이력 [RFID/QR]',
         caption: '',
         icon: '',
-        link: '/systemRfid',
+        link: '/systemId',
       },
       {
         title: '스마트트럭 주행 이력',
         caption: '',
         icon: '',
         link: '/systemSmartDriving',
-      }
+      },
+      {
+        title: '출입 이력',
+        caption: '',
+        icon: '',
+        link: '/systemUnlock',
+      },
     ],
   },
   {
@@ -256,10 +268,22 @@ const linksData = [  {
         link: '/notice',
       },
       {
+        title: '보도자료',
+        caption: '',
+        icon: '',
+        link: '/news',
+      },
+      {
         title: 'FAQ',
         caption: '',
         icon: '',
         link: '/faq',
+      },
+      {
+        title: 'Q&A',
+        caption: '',
+        icon: '',
+        link: '/qna',
       }
     ],
   },

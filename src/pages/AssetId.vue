@@ -1,12 +1,11 @@
 <template>
   <q-table
-    title="게시판관리"
+    title="ID 관리 [RFID / QR]"
     title-class="text-bold text-h5"
     :table-header-style="{ backgroundColor: '#f5f8fa' }"
     :data="data"
     :columns="columns"
     row-key="id"
-    @row-click="prompt"
     :pagination.sync="pagination"
     :loading="loading"
     :filter="filter"
@@ -16,38 +15,17 @@
     binary-state-sort
     flat
   >
-    <template v-slot:top-right>
-      <q-input dense debounce="300" v-model="filter" placeholder="Search">
-        <template v-slot:append>
-          <q-icon name="search" />
-        </template>
-      </q-input>
-      <q-btn
-        class="q-ml-md"
-        padding="xs"
-        color="primary"
-        icon="add"
-        to="/createNotice"
-      />
-    </template>
-
-    <template v-slot:no-data="{ icon, message, filter }">
-      <div class="full-width row flex-center q-gutter-sm">
-        <span>{{ message }}</span>
-      </div>
-    </template>
   </q-table>
 </template>
 
 <script>
-import detailModalNotice from "layouts/DetailModalNotice";
-
 export default {
-  name: "Notice",
-  data () {
-    return {
+  name: "UserLog",
+  data(){
+    return{
       filter: '',
       loading: false,
+      field: row => row.id,
       pagination: {
         sortBy: 'desc',
         descending: false,
@@ -65,39 +43,63 @@ export default {
           field: row => row.no,
           format: val => `${val}`,
         },
-        { id: 2, name: 'title', align: 'center', label: '제목', field: 'title' },
-        { id: 3, name: 'writer', align: 'center', label: '작성자', field: 'writer' },
-        { id: 4, name: 'createdAt', align: 'center', label: '작성일자', field: 'createdAt' },
+        { id: 2, name: 'type', align: 'center', label: '구분', field: 'type' },
+        { id: 3, name: 'place', align: 'center', label: '장소', field: 'place' },
+        { id: 4, name: 'status', align: 'center', label: '상태', field: 'status' },
+        { id: 5, name: 'idValue', align: 'center', label: '고유번호(?)', field: 'idValue' },
       ],
       data: [],
       original: [
-        { 
-          id: 1, name: '공지사항',
-          no: '1', title: '게시판 오픈안내',
-          writer: 'User', 
-          createdAt: '2021.01.11',
-          remark: '우경정보기술 게시판 안내', 
-          files: '각 세부별 안전관리 지침.pdf' 
+        {
+          id:1,
+          no:'1',
+          type:'RFID',
+          place:'',
+          status:'미사용',
+          idValue:'21894daw88092099d'
         },
-        { 
-          id: 2, name: 'FAQ', 
-          no: '2', title: '각 세부별 지침안내', 
-          writer: 'User', 
-          createdAt: '2021.01.11', 
-          remark: '우경정보기술 게시판 안내', 
-          files: '각 세부별 안전관리 지침.pdf' 
+        {
+          id:2,
+          no:'2',
+          type:'RFID',
+          place:'',
+          status:'미사용',
+          idValue:'21894daw88092099d'
         },
-      ]
+        {
+          id:3,
+          no:'3',
+          type:'RFID',
+          place:'',
+          status:'미사용',
+          idValue:'21894daw88092099d'
+        },
+        {
+          id:4,
+          no:'4',
+          type:'RFID',
+          place:'',
+          status:'미사용',
+          idValue:'21894daw88092099d'
+        }
+
+      ],
     }
   },
   mounted () {
-    // get initial data from server (1st page)
     this.onRequest({
       pagination: this.pagination,
       filter: undefined
     })
   },
   methods: {
+    dialogToggle (list){
+        this.$q.dialog({
+            component: ConsumablesHistory,
+            id: list.row.id,
+            history_list: list.row.history_list,
+        })
+    },
     onRequest (props) {
       const { page, rowsPerPage, sortBy, descending } = props.pagination
       const filter = props.filter
@@ -131,9 +133,6 @@ export default {
         this.loading = false
       }, 500)
     },
-
-    // emulate ajax call
-    // SELECT * FROM ... WHERE...LIMIT...
     fetchFromServer (startRow, count, filter, sortBy, descending) {
       const data = filter
         ? this.original.filter(row => row.name.includes(filter))
@@ -155,8 +154,6 @@ export default {
 
       return data.slice(startRow, startRow + count)
     },
-
-    // emulate 'SELECT count(*) FROM ...WHERE...'
     getRowsNumberCount (filter) {
       if (!filter) {
         return this.original.length
@@ -169,46 +166,10 @@ export default {
       })
       return count
     },
-
-    prompt(evt, row) {
-      this.$q.dialog({
-        component: detailModalNotice,
-
-        // optional if you want to have access to
-        // Router, Vuex store, and so on, in your
-        // custom component:
-
-        parent: this, // becomes child of this Vue node
-                      // ("this" points to your Vue component)
-                      // (prop was called "root" in < 1.1.0 and
-                      // still works, but recommending to switch
-                      // to the more appropriate "parent" name)
-
-        // props forwarded to component
-        // (everything except "component" and "parent" props above):
-        no: row.no,
-        name: row.name,
-        title: row.title,
-        writer: row.writer,
-        createdAt: row.createdAt,
-        remark: row.remark,
-        files: row.files,
-        // ...more.props...
-      }).onOk((data) => {
-        this.$router.push({
-          name: 'updateNotice',
-          params: {
-            id: data.no,
-            name: data.name,
-            title: data.title,
-            writer: data.writer,
-            createdAt: data.createdAt,
-            remark: data.remark,
-            files: data.files,
-          }
-        })
-      })
-    },
-  }
+  },
 }
 </script>
+
+<style>
+
+</style>
